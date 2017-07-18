@@ -8,15 +8,15 @@
 #ifndef CIRCLE_H_
 #define CIRCLE_H_
 
+#include "Vector2.h"
+#include <iostream>
+
 class Circle
 {
 public:
     Circle( Vector2 center, double r )
     : _center( center ), _radius( r )
     {}
-
-    // One can also add constructors from two points: the center and a point lying on the circle,
-    // and from three points lying on the circle.
 
     Vector2
     center() const
@@ -28,52 +28,40 @@ public:
 
     static std::string
     name()
-    { return "Square"; }
+    { return "Circle"; }
 
-    std::ostream&
-    serialize( std::ostream& os ) const
-    {
-        os << name() << " ";
-        _center.serialize( os );
-        os << " ";
-        os << _radius;
-        os << "\n";
-        return os;
-    }
-
-    static boost::optional<Circle>
-    deserialize( std::istream& is )
-    {
-        std::string read_name;
-        is >> read_name;
-        if( read_name != name() ) {
-            return {};
-        }
-
-        const auto center = Vector2::deserialize( is );
-        double radius;
-        is >> radius;
-
-        if( not center.is_initialized() or is.fail() or is.bad() ) {
-            return {};
-        }
-
-        std::string remaining;
-        is >> remaining;
-        for( auto c : remaining ) {
-            if( not std::isspace(c) ) {
-                return {};
-            }
-        }
-
-        return { Circle( center.get(), radius ) };
-    }
+    friend std::istream&
+    operator>>( std::istream& is, Circle& circle);
 
 private:
     Vector2 _center;
     double  _radius;
 };
 
+
+
+inline std::ostream&
+operator<<( std::ostream& os, const Circle& circle )
+{
+    return os << circle.name() << " "
+            << circle.center() << " "
+            << circle.radius();
+}
+
+
+
+inline  std::istream&
+operator>>( std::istream& is, Circle& circle)
+{
+    std::string read_name;
+    is >> read_name
+        >> circle._center
+        >> circle._radius;
+    if( read_name != Circle::name() ) {
+        is.setstate(std::ios::failbit);
+    }
+    return is;
+}
 
 
 

@@ -9,7 +9,6 @@
 #define VECTOR2_H_
 
 #include <iostream>
-#include <boost/optional.hpp>
 
 class Vector2
 {
@@ -28,21 +27,30 @@ public:
     y() const
     { return _y; }
 
-    std::ostream&
-    serialize( std::ostream& os ) const
-    { return os << _x << " " << _y; }
+    void
+    set_x( double x )
+    { _x = x; }
 
-    static boost::optional<Vector2>
-    deserialize( std::istream& is )
-    {
-        double x;
-        double y;
-        is >> x >> y;
-        if( is.bad() or is.fail() ) {
-            return {};
-        }
-        return { Vector2{x,y} };
+    void
+    set_y( double y )
+    { _y = y; }
+
+    Vector2&
+    operator+=( const Vector2& rhs ) {
+        _x += rhs.x();
+        _y += rhs.y();
+        return *this;
     }
+
+    Vector2&
+    operator-=( const Vector2& rhs ) {
+        _x -= rhs.x();
+        _y -= rhs.y();
+        return *this;
+    }
+
+    friend std::istream&
+    operator>>( std::istream& is, Vector2& v);
 
 private:
     double _x = 0;
@@ -51,24 +59,23 @@ private:
 
 
 
-inline
-Vector2
-operator+( const Vector2& lhs, const Vector2& rhs ) {
-    return Vector2( lhs.x() + rhs.x(), lhs.y() + rhs.y() );
+inline Vector2
+operator+( Vector2 lhs, Vector2 rhs ) {
+    lhs += rhs;
+    return lhs;
 }
 
 
 
-inline
-Vector2
-operator-( const Vector2& lhs, const Vector2& rhs ) {
-    return Vector2( lhs.x() - rhs.x(), lhs.y() - rhs.y() );
+inline Vector2
+operator-( Vector2 lhs, Vector2 rhs ) {
+    lhs -= rhs;
+    return lhs;
 }
 
 
 
-inline
-bool
+inline bool
 operator==( const Vector2& lhs, const Vector2& rhs ) {
     return lhs.x() == rhs.x()
             and lhs.y() == rhs.y();
@@ -79,7 +86,16 @@ operator==( const Vector2& lhs, const Vector2& rhs ) {
 inline std::ostream&
 operator<<( std::ostream& os, const Vector2& v )
 {
-    return v.serialize( os );
+    return os << v.x() << " " << v.y();
+}
+
+
+
+inline std::istream&
+operator>>( std::istream& is, Vector2& v)
+{
+    is >> v._x >> v._y;
+    return is;
 }
 
 #endif /* VECTOR2_H_ */

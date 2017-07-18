@@ -3,10 +3,13 @@
 #define SQUARE_H_
 
 #include "Vector2.h"
+#include <iostream>
 
 class Square
 {
 public:
+    Square() = default;
+
     Square( Vector2 v0, Vector2 v1  )
     : _v0( v0 ), _v1( v1 )
     {}
@@ -22,37 +25,16 @@ public:
     name()
     { return "Square"; }
 
-
-
+    friend std::istream&
+    operator>>( std::istream& is, Square& v);
 
     std::ostream&
-    serialize( std::ostream& os ) const
-    {
-        os << name() << " ";
-        _v0.serialize(os);
-        os << " ";
-        _v1.serialize(os);
-        os << "\n";
+    print( std::ostream& os ) {
+        os << name();
+        for( size_t iVtx = 0; iVtx < n_vertices(); ++iVtx ) {
+            os << " " << vertex(iVtx);
+        }
         return os;
-    }
-
-    static boost::optional<Square>
-    deserialize( std::istream& is )
-    {
-        std::string read_name;
-        is >> read_name;
-        if( read_name != name() ) {
-            return {};
-        }
-
-        const auto v0 = Vector2::deserialize( is );
-        const auto v1 = Vector2::deserialize( is );
-
-        if( not v0.is_initialized() or not v1.is_initialized() ) {
-            return {};
-        }
-
-        return Square(v0.get(), v1.get());
     }
 
 private:
@@ -86,5 +68,28 @@ Square::vertex( size_t i ) const
 }
 
 
+
+inline std::ostream&
+operator<<( std::ostream& os, const Square& square )
+{
+    return os << square.name() << " "
+            << square.vertex(0) << " "
+            << square.vertex(1);
+}
+
+
+
+inline  std::istream&
+operator>>( std::istream& is, Square& square)
+{
+    std::string read_name;
+    is >> read_name
+        >> square._v0
+        >> square._v1;
+    if( read_name != Square::name() ) {
+        is.setstate(std::ios::failbit);
+    }
+    return is;
+}
 
 #endif /* SQUARE_H_ */
