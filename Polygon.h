@@ -25,13 +25,13 @@ public:
     void
     set_vertex( size_t i, Vector2 v ) {
         if( i >= _vertices.size() ) {
-            _vertices.resize( i );
+            _vertices.resize( i+1 );
         }
         _vertices.at( i ) = v;
     }
 
     void
-    reset()
+    clear()
     { _vertices.clear(); }
 
     static std::string
@@ -62,19 +62,27 @@ operator<<( std::ostream& os, const Polygon& polygon )
 inline  std::istream&
 operator>>( std::istream& is, Polygon& polygon)
 {
+    auto skip_spaces = []( std::istream& is ) {
+        while( not is.eof() and std::isspace( is.peek() ) ) {
+            is.get();
+        }
+        return true;
+    };
+
     std::string line_string;
     std::getline( is, line_string );
     std::istringstream line( line_string );
 
-    polygon.reset();
+    polygon.clear();
 
     std::string read_name;
     line >> read_name;
-    while( not line.eof() ) {
+    while( skip_spaces(line) and not line.eof() ) {
         Vector2 v;
         line >> v;
         polygon.set_vertex( polygon.n_vertices(), v );
     }
+
     if( read_name != Polygon::name() ) {
         is.setstate(std::ios::failbit);
     }

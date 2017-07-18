@@ -9,6 +9,7 @@
 #define VECTOR2_H_
 
 #include <iostream>
+#include "dbg.h"
 
 class Vector2
 {
