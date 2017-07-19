@@ -14,6 +14,8 @@
 class Circle
 {
 public:
+    Circle() = default;
+
     Circle( Vector2 center, double r )
     : _center( center ), _radius( r )
     {}
@@ -35,7 +37,7 @@ public:
 
 private:
     Vector2 _center;
-    double  _radius;
+    double  _radius = 0;
 };
 
 
