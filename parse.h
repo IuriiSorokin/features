@@ -83,6 +83,16 @@ parse_line( std::string line, tuple_of_vectors_t<FeatureTypes>& feature_vectors 
     parse_line<FeatureTypes, Index + 1>( line, feature_vectors );
 }
 
+bool
+is_empty( std::string s ) {
+    for( auto c : s ) {
+        if( not std::isspace(c) ) {
+            return false;
+        }
+    }
+    return true;
+}
+
 } /* namespace deserialize_detail */
 
 
@@ -98,6 +108,10 @@ parse( std::istream& is, tuple_of_vectors_t<FeatureTypes>& feature_vectors )
             // if exceptions in "is" enabled, "is" shall throw
             // otherwise, the error is signalized by the fail flag
             break;
+        }
+
+        if( parse_detail::is_empty( line ) ) {
+            continue;
         }
 
         try {
