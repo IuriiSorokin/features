@@ -40,6 +40,23 @@ private:
 };
 
 
+inline bool
+operator==( const Triangle& lhs, const Triangle& rhs )
+{
+    return lhs.vertex(0) == rhs.vertex( 0 )
+            and lhs.vertex( 1 ) == rhs.vertex( 1 )
+            and lhs.vertex( 2 ) == rhs.vertex( 2 );
+}
+
+
+
+inline bool
+operator!=( const Triangle& lhs, const Triangle& rhs )
+{
+    return not (lhs == rhs);
+}
+
+
 
 inline std::ostream&
 operator<<( std::ostream& os, const Triangle& triangle )

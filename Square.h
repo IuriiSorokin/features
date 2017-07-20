@@ -69,6 +69,23 @@ Square::vertex( size_t i ) const
 
 
 
+inline bool
+operator==( const Square& lhs, const Square& rhs )
+{
+    return lhs.vertex(0) == rhs.vertex( 0 )
+            and lhs.vertex( 1 ) == rhs.vertex( 1 );
+}
+
+
+
+inline bool
+operator!=( const Square& lhs, const Square& rhs )
+{
+    return not (lhs == rhs);
+}
+
+
+
 inline std::ostream&
 operator<<( std::ostream& os, const Square& square )
 {

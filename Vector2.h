@@ -84,6 +84,13 @@ operator==( const Vector2& lhs, const Vector2& rhs ) {
 
 
 
+inline bool
+operator!=( const Vector2& lhs, const Vector2& rhs ) {
+    return not (lhs == rhs );
+}
+
+
+
 inline std::ostream&
 operator<<( std::ostream& os, const Vector2& v )
 {

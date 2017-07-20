@@ -47,6 +47,33 @@ private:
 
 
 
+
+inline bool
+operator==( const Polygon& lhs, const Polygon& rhs )
+{
+    if( lhs.n_vertices() != rhs.n_vertices() ) {
+        return false;
+    }
+
+    for( size_t i_vtx = 0; i_vtx < lhs.n_vertices(); ++i_vtx ) {
+        if( lhs.vertex( i_vtx ) != rhs.vertex( i_vtx ) ) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+
+inline bool
+operator!=( const Polygon& lhs, const Polygon& rhs )
+{
+    return not (lhs == rhs);
+}
+
+
+
 inline std::ostream&
 operator<<( std::ostream& os, const Polygon& polygon )
 {
@@ -89,10 +116,6 @@ operator>>( std::istream& is, Polygon& polygon)
 
     if( line.fail() ) {
         is.setstate(std::ios::failbit);
-    }
-
-    if( line.bad() ) {
-        is.setstate(std::ios::badbit);
     }
 
     return is;

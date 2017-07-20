@@ -42,6 +42,22 @@ private:
 
 
 
+inline bool
+operator==( const Circle& lhs, const Circle& rhs )
+{
+    return lhs.center() == rhs.center()
+            and lhs.radius() == rhs.radius();
+}
+
+
+
+inline bool
+operator!=( const Circle& lhs, const Circle& rhs )
+{
+    return not (lhs == rhs);
+}
+
+
 inline std::ostream&
 operator<<( std::ostream& os, const Circle& circle )
 {
