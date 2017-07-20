@@ -15,7 +15,7 @@ private:
     std::string _line;
 public:
     parsing_failure( std::string line )
-    : std::ios_base::failure( std::string("Failed parsing line [")  + line + "]." )
+    : std::ios_base::failure( std::string("Failed parsing line \"")  + line + "\"." )
     , _line( line )
     {}
 
@@ -119,10 +119,9 @@ parse( std::istream& is, tuple_of_vectors_t<FeatureTypes>& feature_vectors )
         } catch ( parsing_failure& pf ) {
             if ( is.exceptions() & std::ios::failbit ) {
                 throw;
-            } else {
-                is.setstate( std::ios::failbit );
-                break;
             }
+            is.setstate( std::ios::failbit );
+            break;
         }
     }
 }
