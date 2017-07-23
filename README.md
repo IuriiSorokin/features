@@ -33,6 +33,5 @@ The main disadvantages of ~~plain arrays~~ raw-ponters-to-preallocated-memory-bl
 #### 7. Using `stdio.h`
 The utilities in `stdio.h` are not memory-safe, not exception-safe, not type-safe, do not comply with RAII (`FILE`s must be explicitly closed with `fclose`), do not support different encodings, and are a subject of *Uncontrolled format string* vulnerability. Unit-testing functions accepting FILE* require a FILE mock. 
 
-`iostream` is ~~free of the above disadvantages~~ much better in the above respects. It provides higher level abstractions (locales, custom streaming operators, streams that can represent a file, a string, or an object generating the data on-the-fly). 
+`std::iostream` is free of the above shortcomings. It provides higher level abstractions: locales, custom streaming operators, streams can represent a file, a string, or an object, generating the data on-the-fly. One may also consider e.g. `boost::iostreams`. 
 
-#### Excellent collection of antipatterns!
