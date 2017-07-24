@@ -37,6 +37,21 @@ public:
         return os;
     }
 
+//    template<typename IStreamT>
+//    static Square deserialize(IStreamT& is)
+//    {
+//        const auto v0 = Vector2::deserialize( is );
+//        const auto v1 = Vector2::deserialize( is );
+//        return Square( v0, v1 );
+//    }
+    static Square deserialize(std::istream & is)
+    {
+        const auto v0 = Vector2::deserialize( is );
+        const auto v1 = Vector2::deserialize( is );
+        return Square( v0, v1 );
+    }
+
+
 private:
     Vector2 _v0;
     Vector2 _v1;

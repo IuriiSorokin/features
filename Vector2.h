@@ -53,6 +53,23 @@ public:
     friend std::istream&
     operator>>( std::istream& is, Vector2& v);
 
+//    template< typename IStreamT >
+//    static Vector2
+//    deserialize( IStreamT & is )
+//    {
+//        double x, y;
+//        is >> x >> y;
+//        return Vector2( x, y );
+//    }
+
+    static Vector2
+    deserialize( std::istream& is )
+    {
+        double x, y;
+        is >> x >> y;
+        return Vector2( x, y );
+    }
+
 private:
     double _x = 0;
     double _y = 0;

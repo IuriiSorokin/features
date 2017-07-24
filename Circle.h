@@ -35,6 +35,23 @@ public:
     friend std::istream&
     operator>>( std::istream& is, Circle& circle);
 
+//    template<typename IStreamT>
+//    static Circle deserialize(IStreamT& is)
+//    {
+//        const auto center = Vector2::deserialize( is );
+//        double radius;
+//        is >> radius;
+//        return Circle( center, radius );
+//    }
+
+    static Circle deserialize( std::istream& is)
+    {
+        const auto center = Vector2::deserialize( is );
+        double radius;
+        is >> radius;
+        return Circle( center, radius );
+    }
+
 private:
     Vector2 _center;
     double  _radius = 0;
