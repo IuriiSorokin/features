@@ -21,22 +21,6 @@ public:
     Vector2
     vertex( size_t i ) const;
 
-    static std::string
-    name()
-    { return "Square"; }
-
-    friend std::istream&
-    operator>>( std::istream& is, Square& v);
-
-    std::ostream&
-    print( std::ostream& os ) {
-        os << name();
-        for( size_t iVtx = 0; iVtx < n_vertices(); ++iVtx ) {
-            os << " " << vertex(iVtx);
-        }
-        return os;
-    }
-
 private:
     Vector2 _v0;
     Vector2 _v1;
@@ -84,29 +68,5 @@ operator!=( const Square& lhs, const Square& rhs )
     return not (lhs == rhs);
 }
 
-
-
-inline std::ostream&
-operator<<( std::ostream& os, const Square& square )
-{
-    return os << square.name() << " "
-            << square.vertex(0) << " "
-            << square.vertex(1);
-}
-
-
-
-inline  std::istream&
-operator>>( std::istream& is, Square& square)
-{
-    std::string read_name;
-    is >> read_name
-        >> square._v0
-        >> square._v1;
-    if( read_name != Square::name() ) {
-        is.setstate(std::ios::failbit);
-    }
-    return is;
-}
 
 #endif /* SQUARE_H_ */
