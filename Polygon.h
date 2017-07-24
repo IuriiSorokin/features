@@ -9,8 +9,12 @@ class Polygon
 {
 public:
     Polygon( std::vector<Vector2> vertices )
-    : _vertices( vertices )
-    {}
+    {
+        if( vertices.size() < 3 ) {
+            throw std::invalid_argument("Polygon must have at least 3 vertices");
+        }
+        _vertices = std::move( vertices );
+    }
 
     size_t
     n_vertices() const

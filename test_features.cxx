@@ -79,10 +79,12 @@ BOOST_AUTO_TEST_CASE(Polygon_vertices)
 
 
 
-BOOST_AUTO_TEST_CASE(Polygon_0_vertices)
+BOOST_AUTO_TEST_CASE(Polygon_less_than_3_vertices)
 {
-    Polygon polygon( {} );
-    BOOST_CHECK_EQUAL( polygon.n_vertices(), 0 );
+    try {
+        Polygon polygon( { {4, 4}, {2,3} } );
+        BOOST_FAIL("Must have thrown std::invalid_argument");
+    } catch( std::invalid_argument& e ) {}
 }
 
 
