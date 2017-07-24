@@ -60,9 +60,4 @@ struct is_feature {
     static constexpr bool value = Features_detail::is_feature_unpack_feature_types<TypeT>( Features() );
 };
 
-
-
-
-
-
 #endif /* FEATURES_H_ */

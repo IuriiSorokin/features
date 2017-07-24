@@ -8,12 +8,9 @@
 #ifndef CANVAS_H_
 #define CANVAS_H_
 
-#include "Circle.h"
-#include "Square.h"
-#include "Triangle.h"
-#include "Polygon.h"
+#include "Features.h"
 #include <type_traits>
-#include <cmath>
+#include "streamers.h"
 
 // A class that can draw various features
 class Canvas
@@ -23,22 +20,31 @@ public:
     ~Canvas() = default;
 
     template< typename FeatureT,
-        typename std::enable_if<
-        std::is_same< decltype( ((FeatureT*)nullptr)->FeatureT::vertex(0)    ), Vector2 >::value and
-        std::is_same< decltype( ((FeatureT*)nullptr)->FeatureT::n_vertices() ), size_t >::value, bool>::type _enable = true >
+        std::enable_if_t< std::is_same< decltype( ((FeatureT*)nullptr)->FeatureT::vertex(0)    ), Vector2 >::value and
+                          std::is_same< decltype( ((FeatureT*)nullptr)->FeatureT::n_vertices() ), size_t >::value, bool> = true >
     void
     draw( FeatureT feature ) {
         for( size_t iVtx = 0; iVtx < feature.n_vertices(); ++iVtx ) {
-            // const auto iNextVtx = (iVtx + 1) % feature.n_vertices();
-            // const auto v1 = feature.vertex(iVtx);
-            // const auto v2 = feature.vertex(iNextVtx);
+             const auto iNextVtx = (iVtx + 1) % feature.n_vertices();
+             const auto v0 = feature.vertex(iVtx);
+             const auto v1 = feature.vertex(iNextVtx);
+             drawLine( v0, v1 );
         }
     }
 
     void
     draw( Circle circle ) {
+        drawCircle( circle.center(), circle.radius() );
     }
 
+protected:
+    virtual void
+    drawLine( Vector2 v0, Vector2 v1 )
+    {}
+
+    virtual void
+    drawCircle( Vector2 center, double radius )
+    {}
 };
 
 #endif /* CANVAS_H_ */
