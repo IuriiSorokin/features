@@ -12,8 +12,6 @@
 #include <iostream>
 #include <string>
 
-#include "dbg.h"
-
 namespace serdes {
 
 template<typename FeatureT>
