@@ -35,3 +35,15 @@ The utilities in `stdio.h` are not memory-safe, not exception-safe, not type-saf
 
 `std::iostream` is free of the above shortcomings. It provides higher level abstractions: locales, custom streaming operators, streams can represent a file, a string, or an object, generating the data on-the-fly. One may also consider e.g. `boost::iostreams`. 
 
+# Few remarks on the proposed code:
+
+The normal usage is demonstrated in `test_Parser.cxx` and `test_Canvas.cxx`. Class `Canvas` demonstrates how Features can be drawn. 
+
+ Despite of the fact the code became considerably more complex, the usage and support is became simpler:
+ * Features are not required to implement any interface. They do not depend on the serialization and drawing.
+ * Once a new Feature is implemented, it has to be "registered" only in one place: in the `Features` alias (in `Features.h`). Failing to implement Feature (de-)serialization will result in a compile-time error;  
+ * Default cctors and setters in Features are intentionally omitted. The copy cctors and copy assingment operators are required by `std::vector`. 
+ 
+  
+
+

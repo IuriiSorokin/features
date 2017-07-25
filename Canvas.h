@@ -20,8 +20,7 @@ public:
     ~Canvas() = default;
 
     template< typename FeatureT,
-        std::enable_if_t< std::is_same< decltype( ((FeatureT*)nullptr)->FeatureT::vertex(0)    ), Vector2 >::value and
-                          std::is_same< decltype( ((FeatureT*)nullptr)->FeatureT::n_vertices() ), size_t >::value, bool> = true >
+              enable_if_has_vertices_t<FeatureT, bool> = true >  // "Has vertices" does not necessarily mean "Consist only of vertices", but here assumed so.
     void
     draw( FeatureT feature ) {
         for( size_t iVtx = 0; iVtx < feature.n_vertices(); ++iVtx ) {
