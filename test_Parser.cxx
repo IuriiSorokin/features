@@ -10,11 +10,11 @@ BOOST_AUTO_TEST_CASE(parse_normal)
 {
 
     std::istringstream is(
-            "Square 1 1 2 2\n"             // Square 0
-            "Square 2 2 4 4\n"             // Square 1
-            "Triangle -3 -3 -2 -2 1 1\n"   // Triangle 0
-            "Circle -3 -3 5\n"             // Circle 0
-            "Polygon 6 1 1 2 2 3 3 4 4 5 5 6 6" ); // Polygon 0
+            "Square 1 1 2 2\n"                     // Square 0  Format is: "Square x0 y0 x1 y1". Other two vertices are evaluated. Vertices numbered counterclockwise.
+            "Square 2 2 4 4\n"                     // Square 1
+            "Triangle -3 -3 -2 -2 1 1\n"           // Triangle 0
+            "Circle -3 -3 5\n"                     // Circle 0
+            "Polygon 6 1 1 2 2 3 3 4 4 5 5 6 6" ); // Polygon 0   Format is: "Polygon N x0 y0 x1 y1 ... xN yN" where N - number of vertices
 
     auto features = Parser<Features>().parse( is );
 
