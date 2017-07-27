@@ -18,7 +18,7 @@ template<typename... FeatureT>
 struct feature_types_t
 {};
 
-using Features = feature_types_t<Circle, Polygon, Square, Triangle>;
+using Features = feature_types_t<Circle, Polygon, Square, Triangle>; // Here I don't use std::tuple as then "is_feature_unpack_feature_types" would require all features to be default-constructible
 
 
 
